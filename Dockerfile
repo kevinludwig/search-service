@@ -10,7 +10,7 @@ COPY config /opt/app/config
 COPY src /opt/app/src
 ADD gulpfile.js /opt/app
 ADD .eslintrc /opt/app
-RUN npm run build
+RUN npm run build 
 
 EXPOSE 8080 
 CMD ["node", "build/boot.js"]
