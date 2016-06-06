@@ -1,27 +1,29 @@
 import es from './es'
+import {
+    aggs,
+    query
+} from './query'
 import config from 'config'
 
 export default function*(term, skip, limit) {
-    yield results = es.search({
+    let results = yield es.search({
         index: config.search.readAlias,
         type: config.search.type,
-        from: skip,
-        size: limit,
         body: {
-            query: {
-                match: {
-                    text: term
-                }
-            }
+            query: query(term),
+            aggs: aggs(skip, limit)
         }
     });
 
-    return {
-        total: hits.total,
+    let rv = {
         skip: skip,
-        limit: limit,
-        results: results.hits.hits.map((hit) => {
-            return hit._source;
-        })
+        limit: limit
     };
+    results.aggregations.top_content_type.buckets.forEach((bucket) => {
+        rv[bucket.key] = bucket.content_type_hits.hits.hits.map((hit) => {
+            return hit._source;
+        });
+        rv[bucket.key + '_total'] = bucket.content_type_hits.hits.total;
+    });
+    return Promise.resolve(rv);
 }

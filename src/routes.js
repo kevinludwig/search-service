@@ -13,8 +13,8 @@ let router = new Router({
 });
 
 router.get('/search/:term', search);
-router.post('/upsert/:id', upsert);
-router.post('/delete', del);
+router.post('/upsert', upsert);
+router.post('/delete/:id', del);
 router.get('/index', getIndex);
 router.post('/index', createIndex);
 router.delete('/index', dropIndex);

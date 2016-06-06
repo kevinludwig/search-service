@@ -51,9 +51,18 @@ export default {
                 },
                 title: {
                     type: 'string',
-                    analyzer: 'autocomplete_analyzer',
-                    /* type as you go search */
-                    search_analyzer: 'text_analyzer'
+                    analyzer: 'text_analyzer',
+                    fields: {
+                        exact: {
+                            type: 'string',
+                            analyzer: 'exact_analyzer'
+                        },
+                        prefix: {
+                            type: 'string',
+                            analyzer: 'autocomplete_analyzer',
+                            search_analyzer: 'text_analyzer'
+                        }
+                    }
                 },
                 description: {
                     type: 'string',
