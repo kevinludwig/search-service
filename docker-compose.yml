@@ -1,0 +1,10 @@
+app:
+    build: .
+    links: 
+        - elasticsearch
+    ports:
+        - 8080:8080 
+elasticsearch:
+    image: elasticsearch
+    ports:
+        - 9200:9200

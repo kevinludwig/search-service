@@ -1,0 +1,49 @@
+{
+  "name": "search-template",
+  "version": "0.0.0",
+  "description": "search api with elasticsearch",
+  "scripts": {
+      "start": "node app.js",
+      "test": "gulp",
+      "build": "gulp build",
+      "coverage": "gulp coverage"
+  },
+  "keywords": [
+    "koa"
+  ],
+  "dependencies": { 
+    "koa": "^1.2.0",
+    "koa-router": "^5.4.0",
+    "koa-bodyparser": "^2.1.0",
+    "koa-response-time": "^1.0.2",
+    "koa-helmet": "^1.0.0",
+    "koa-cors": "^0.0.16",
+    "koa-ping": "https://github.com/kevinludwig/koa-ping.git",
+    "koa-toobusy": "^1.0.1",
+    "koa-err": "^1.0.1",
+    "koa-accesslog": "^0.0.2",
+    "koa-docs": "^0.8.2",
+    "http-graceful-shutdown": "^1.0.6",
+    "es6-promisify": "^4.1.0",
+    "config": "^1.20.1",
+    "winston": "^2.2.0",
+    "restify-clients": "^1.2.1",
+    "elasticsearch": "^11.0.1"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "chai": "^3.5.0",
+    "sinon": "^1.17.4",
+    "sinon-as-promised": "^4.0.0",
+    "gulp": "^3.9.0",
+    "gulp-istanbul": "^0.10.4",
+    "gulp-mocha": "^2.2.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-open": "^2.0.0",
+    "gulp-jsbeautify": "^0.1.1",
+    "gulp-babel": "^6.1.2",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
+    "babel-plugin-transform-runtime": "^6.8.0",
+    "babel-runtime": "^6.6.1"
+  }
+}
