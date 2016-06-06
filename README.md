@@ -22,4 +22,7 @@ npm start
 
 ### TODO
 
-* Do a better search implementation
+* More like this search
+* Recently added, recently modified search
+* access control 
+* unit tests

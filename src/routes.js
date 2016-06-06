@@ -1,5 +1,6 @@
 import Router from 'koa-router'
 import search from './controllers/search'
+import similar from './controllers/similar'
 import upsert from './controllers/upsert'
 import del from './controllers/del'
 import getIndex from './controllers/getIndex'
@@ -13,6 +14,7 @@ let router = new Router({
 });
 
 router.get('/search/:term', search);
+router.get('/similar/:id', similar);
 router.post('/upsert', upsert);
 router.post('/delete/:id', del);
 router.get('/index', getIndex);
