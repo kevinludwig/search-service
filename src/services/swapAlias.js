@@ -1,7 +1,7 @@
 import es from './es'
 import config from 'config'
 
-export default function* () {
+export default function*() {
     let exists = yield es.indices.existsAlias({
         index: '_all',
         name: config.search.readAlias
@@ -10,10 +10,17 @@ export default function* () {
         // atomic alias swap
         return es.indices.updateAliases({
             body: {
-                actions: [
-                    {remove: {index: '_all', alias: config.search.readAlias}},
-                    {add: {index: config.search.index, alias: config.search.readAlias}}
-                ]
+                actions: [{
+                    remove: {
+                        index: '_all',
+                        alias: config.search.readAlias
+                    }
+                }, {
+                    add: {
+                        index: config.search.index,
+                        alias: config.search.readAlias
+                    }
+                }]
             }
         });
     } else {

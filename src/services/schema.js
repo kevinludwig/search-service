@@ -15,7 +15,7 @@ export default {
                     type: 'custom',
                     tokenizer: 'whitespace',
                     filter: [
-                        'lowercase', 'asciifolding', 'english_filter' 
+                        'lowercase', 'asciifolding', 'english_filter'
                     ]
                 },
                 autocomplete_analyzer: {
@@ -51,7 +51,8 @@ export default {
                 },
                 title: {
                     type: 'string',
-                    analyzer: 'autocomplete_analyzer', /* type as you go search */
+                    analyzer: 'autocomplete_analyzer',
+                    /* type as you go search */
                     search_analyzer: 'text_analyzer'
                 },
                 description: {
