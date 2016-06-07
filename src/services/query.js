@@ -106,10 +106,7 @@ function similar(id) {
                 _index: config.search.readAlias,
                 _type: config.search.type,
                 _id: id
-            },
-            min_term_freq: 1,
-            max_query_terms: 10,
-            analyzer: 'text_analyzer'
+            }
         }
     };
 }
