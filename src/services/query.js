@@ -106,7 +106,9 @@ function similar(id) {
                 _index: config.search.readAlias,
                 _type: config.search.type,
                 _id: id
-            }
+            },
+            min_doc_freq: 1,
+            min_term_freq: 1
         }
     };
 }
