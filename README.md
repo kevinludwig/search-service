@@ -22,7 +22,6 @@ npm start
 
 ### TODO
 
-* More like this search
 * Recently added, recently modified search
 * access control 
 * unit tests

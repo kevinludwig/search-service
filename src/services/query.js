@@ -1,3 +1,5 @@
+import config from 'config'
+
 function exactMatch(term) {
     return {
         term: {
@@ -96,7 +98,24 @@ function aggs(skip, limit) {
     };
 }
 
+function similar(id) {
+    return {
+        more_like_this: {
+            fields: ['title', 'tags', 'description'],
+            like: {
+                _index: config.search.readAlias,
+                _type: config.search.type,
+                _id: id
+            },
+            min_term_freq: 1,
+            max_query_terms: 10,
+            analyzer: 'text_analyzer'
+        }
+    };
+}
+
 export {
     aggs,
+    similar,
     query
 }

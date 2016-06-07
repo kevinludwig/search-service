@@ -4,7 +4,7 @@
   "description": "search api with elasticsearch",
   "scripts": {
       "start": "node app.js",
-      "test": "gulp",
+      "test": "NODE_ENV=test gulp",
       "build": "gulp build",
       "coverage": "gulp coverage"
   },

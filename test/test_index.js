@@ -47,10 +47,12 @@ describe('test index create, get, swap-alias, drop', () => {
         client.get(config.prefix + '/index', (err, req, res, data) => {
             should.not.exist(err);
             res.statusCode.should.be.eql(200);
-            data.should.have.property('mappings');
-            data.should.have.property('settings');
-            data.should.have.property('aliases');
-            data.aliases.should.have.keys('content-index-write');
+            data.should.have.property('content-index-v1');
+
+            data['content-index-v1'].should.have.property('mappings');
+            data['content-index-v1'].should.have.property('settings');
+            data['content-index-v1'].should.have.property('aliases');
+            data['content-index-v1'].aliases.should.have.keys('content-index-write', 'content-index-read');
             done();
         });
     });
@@ -60,8 +62,9 @@ describe('test index create, get, swap-alias, drop', () => {
             res.statusCode.should.be.eql(200);
             client.get(config.prefix + '/index', (err, req, res, data) => {
                 res.statusCode.should.be.eql(200);
-                data.should.have.property('aliases');
-                data.aliases.should.have.keys('content-index-write', 'content-index-read');
+                data['content-index-v1'].should.have.property('aliases');
+                data['content-index-v1'].aliases.should.have.keys('content-index-write', 'content-index-read');
+                done();
             });
         });
     });

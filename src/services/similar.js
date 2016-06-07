@@ -1,4 +1,7 @@
 import es from './es'
+import {
+    similar
+} from './query'
 import config from 'config'
 
 export default function*(id, skip, limit) {
@@ -6,30 +9,18 @@ export default function*(id, skip, limit) {
         index: config.search.readAlias,
         type: config.search.type,
         body: {
-            query: {
-                more_like_this: {
-                    fields: ['title', 'tags', 'description'],
-                    like: [
-                        _index: config.search.readAlias,
-                        _type: config.search.type,
-                        _id: id
-                    ],
-                    min_term_frequency: 1,
-                    max_query_terms: 10,
-                    analyzer: 'text_analyzer'
-                }
-            },
+            query: similar(id),
             from: skip,
             size: limit
         }
     });
 
-    Promise.resolve({
+    return Promise.resolve({
         skip: skip,
         limit: limit,
-        total: results.hits.total, 
+        total: results.hits.total,
         results: results.hits.hits.map((hit) => {
             return hit._source;
-        }
+        })
     });
 }

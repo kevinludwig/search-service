@@ -22,10 +22,20 @@ describe(config.prefix + '/search/:term', () => {
         sandbox;
 
     before((done) => {
-        server = app(done);
+        server = app(function() {
+            // create the index
+            client.post(config.prefix + '/index', function(err) {
+                should.not.exist(err);
+                done();
+            });
+        });
     });
-    after(() => {
-        server.close();
+    after((done) => {
+        client.del(config.prefix  + '/index', function(err) {
+            should.not.exist(err);
+            server.close();
+            done();
+        });
     });
 
     beforeEach(() => {
@@ -36,8 +46,15 @@ describe(config.prefix + '/search/:term', () => {
         sandbox.restore();
     });
 
-    it('should return 200 OK', (done) => {
+    it('should return 200 OK for search', (done) => {
         client.get(config.prefix + '/search/test', (err, req, res) => {
+            res.statusCode.should.be.eql(200);
+            done();
+        });
+    });
+
+    it('should return 200 OK for similar', (done) => {
+        client.get(config.prefix + '/similar/1', (err, req, res, data) => {
             res.statusCode.should.be.eql(200);
             done();
         });

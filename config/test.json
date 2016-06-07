@@ -1,0 +1,5 @@
+{
+    "search": {
+        "host": "localhost:9200"
+    }
+}
