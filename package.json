@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "search api with elasticsearch",
   "scripts": {
-      "start": "node app.js",
+      "start": "gulp build && node build/boot.js",
       "test": "NODE_ENV=test gulp",
       "build": "gulp build",
       "coverage": "gulp coverage"
