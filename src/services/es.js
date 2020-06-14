@@ -1,7 +1,7 @@
-import elasticsearch from 'elasticsearch'
-import config from 'config'
+const elasticsearch = require('elasticsearch'),
+    config = require('config');
 
-export default new elasticsearch.Client({
+module.exports = new elasticsearch.Client({
     host: config.search.host,
     log: config.search.log
 });

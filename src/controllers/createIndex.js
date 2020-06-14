@@ -1,6 +1,6 @@
-import createIndex from '../services/createIndex'
+const createIndex = require('../services/createIndex');
 
-export default function*() {
-    yield createIndex();
-    this.status = 200;
+module.exports = async (ctx) => {
+    await createIndex();
+    ctx.status = 200;
 }

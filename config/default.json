@@ -1,8 +1,6 @@
 {
     "port": 8080,
-    "shutdownTimeout": 1000,
     "logLevel": "info",
-    "prefix": "/search/v1",
     "search": {
         "host": "elasticsearch:9200",
         "log": "info",

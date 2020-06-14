@@ -1,7 +1,7 @@
-import config from 'config'
-import es from './es'
+const config = require('config'),
+    es = require('./es');
 
-export default function() {
+module.exports = () => {
     return es.indices.delete({
         index: config.search.index,
         ignore: [404]

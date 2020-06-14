@@ -1,12 +1,11 @@
-import es from './es'
-import config from 'config'
+const es = require('./es'),
+    config = require('config');
 
-export default function*(id, doc) {
-    let result = yield es.index({
+module.exports = (id, doc) => {
+    return es.index({
         index: config.search.writeAlias,
         type: config.search.type,
         id: doc.id,
         body: doc
     });
-    return result;
 }

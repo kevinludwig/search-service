@@ -1,4 +1,4 @@
-import config from 'config'
+const config = require('config')
 
 function exactMatch(term) {
     return {
@@ -56,7 +56,7 @@ function descriptionMatch(term) {
     };
 }
 
-function query(term) {
+module.exports = (term) => {
     return {
         bool: {
             should: [
@@ -71,50 +71,3 @@ function query(term) {
     };
 };
 
-function aggs(skip, limit) {
-    return {
-        top_content_type: {
-            terms: {
-                field: 'content_type',
-                order: {
-                    max_score: 'desc'
-                }
-            },
-            aggs: {
-                content_type_hits: {
-                    top_hits: {
-                        size: limit,
-                        from: skip
-                    }
-                },
-                max_score: {
-                    max: {
-                        lang: 'expression',
-                        script: '_score'
-                    }
-                }
-            }
-        }
-    };
-}
-
-function similar(id) {
-    return {
-        more_like_this: {
-            fields: ['title', 'tags', 'description'],
-            like: {
-                _index: config.search.readAlias,
-                _type: config.search.type,
-                _id: id
-            },
-            min_doc_freq: 1,
-            min_term_freq: 1
-        }
-    };
-}
-
-export {
-    aggs,
-    similar,
-    query
-}

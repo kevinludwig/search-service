@@ -1,29 +1,19 @@
-import es from './es'
-import {
-    aggs,
-    query
-} from './query'
-import config from 'config'
+const es = require('./es'),
+    query = require('./query'),
+    config = require('config');
 
-export default function*(term, skip, limit) {
-    let results = yield es.search({
+module.exports = async (term, skip, limit) => {
+    const results = await es.search({
         index: config.search.readAlias,
         type: config.search.type,
         body: {
-            query: query(term),
-            aggs: aggs(skip, limit)
+            query: query(term)
         }
     });
 
-    let rv = {
-        skip: skip,
-        limit: limit
+    return {
+        results: results.hits.hits.map(r => r._source),
+        skip,
+        limit
     };
-    results.aggregations.top_content_type.buckets.forEach((bucket) => {
-        rv[bucket.key] = bucket.content_type_hits.hits.hits.map((hit) => {
-            return hit._source;
-        });
-        rv[bucket.key + '_total'] = bucket.content_type_hits.hits.total;
-    });
-    return Promise.resolve(rv);
 }

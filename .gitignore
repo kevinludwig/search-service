@@ -1,5 +1,6 @@
 node_modules/
-coverage/
-test-build/
-build/
+.nyc_output/
+.DS_Store
+.idea/
+.vscode/
 *.log

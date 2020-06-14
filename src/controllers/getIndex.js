@@ -1,5 +1,5 @@
-import getIndex from '../services/getIndex'
+const getIndex = require('../services/getIndex');
 
-export default function*() {
-    this.body = yield getIndex();
+module.exports = async (ctx) => {
+    ctx.body = await getIndex();
 }

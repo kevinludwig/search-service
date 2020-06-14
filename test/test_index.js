@@ -1,81 +1,42 @@
-import sinon from 'sinon'
-import 'sinon-as-promised'
-import chai from 'chai'
-import restify from 'restify-clients'
-import config from 'config'
-import app from '../app'
+const chai = require('chai'),
+    request = require('supertest'),
+    config = require('config'),
+    app = require('../src/app');
 
 const should = chai.should();
 
-let client = restify.createJsonClient({
-    url: 'http://localhost:' + config.port,
-    retry: {
-        retries: 0
-    },
-    connectTimeout: 500,
-    requestTimeout: 500,
-    agent: false
-});
+describe('test index create, get, and drop', () => {
+    let server = null;
 
-describe('test index create, get, swap-alias, drop', () => {
-    let server = null,
-        sandbox;
-
-    before((done) => {
-        server = app(done);
+    before(async () => {
+        server = await app();
     });
     after(() => {
         server.close();
     });
 
-    beforeEach(() => {
-        sandbox = sinon.sandbox.create();
+    it('should create the index', async () => {
+        await request(server)
+            .post(config.prefix + '/index')
+            .expect(200);
     });
+    
+    it('should get the index after create', async () => {
+        const {body} = await request(server)
+            .get(config.prefix + '/index')
+            .expect(200);
+        body.should.have.property('content-index-v1');
 
-    afterEach(() => {
-        sandbox.restore();
+        body['content-index-v1'].should.have.property('mappings');
+        body['content-index-v1'].should.have.property('settings');
     });
-
-    it('should create the index', (done) => {
-        client.post(config.prefix + '/index', (err, req, res) => {
-            should.not.exist(err);
-            res.statusCode.should.be.eql(200);
-            done();
-        });
-    });
-    it('should get the index after create', (done) => {
-        client.get(config.prefix + '/index', (err, req, res, data) => {
-            should.not.exist(err);
-            res.statusCode.should.be.eql(200);
-            data.should.have.property('content-index-v1');
-
-            data['content-index-v1'].should.have.property('mappings');
-            data['content-index-v1'].should.have.property('settings');
-            data['content-index-v1'].should.have.property('aliases');
-            data['content-index-v1'].aliases.should.have.keys('content-index-write', 'content-index-read');
-            done();
-        });
-    });
-    it('should swap the read alias in', (done) => {
-        client.post(config.prefix + '/alias/swap', (err, req, res) => {
-            should.not.exist(err);
-            res.statusCode.should.be.eql(200);
-            client.get(config.prefix + '/index', (err, req, res, data) => {
-                res.statusCode.should.be.eql(200);
-                data['content-index-v1'].should.have.property('aliases');
-                data['content-index-v1'].aliases.should.have.keys('content-index-write', 'content-index-read');
-                done();
-            });
-        });
-    });
-    it('should drop the index', (done) => {
-        client.del(config.prefix + '/index', (err, req, res) => {
-            should.not.exist(err);
-            res.statusCode.should.be.eql(200);
-            client.get(config.prefix + '/index', (err, req, res) => {
-                res.statusCode.should.not.eql(200);
-                done();
-            });
-        });
+    
+    it('should drop the index', async () => {
+        await request(server)
+            .delete(config.prefix + '/index')
+            .expect(200);
+        await request(server)
+            .get(config.prefix + '/index')
+            .expect(404);
     });
 });

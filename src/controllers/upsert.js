@@ -1,10 +1,10 @@
-import upsert from '../services/upsert'
+const upsert = require('../services/upsert');
 
-export default function*() {
-    let body = this.request.body;
+module.exports = async (ctx) => {
+    const body = ctx.request.body;
 
-    this.assert(body.id, 400, 'missing body.id');
+    ctx.assert(body.id, 400, 'missing body.id');
 
-    yield upsert(body.id, body);
-    this.status = 200;
+    await upsert(body.id, body);
+    ctx.status = 200;
 }

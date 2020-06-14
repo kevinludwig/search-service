@@ -1,8 +1,8 @@
-import search from '../services/search'
+const search = require('../services/search');
 
-export default function*() {
-    let {
+module.exports = async (ctx) => {
+    const {
         skip = 0, limit = 25
-    } = this.request.query;
-    this.body = yield search(this.params.term, skip, limit);
+    } = ctx.request.query;
+    ctx.body = await search(ctx.params.term, skip, limit);
 }

@@ -1,7 +1,7 @@
-import es from './es'
-import config from 'config'
+const es = require('./es'),
+    config = require('config');
 
-export default function(id) {
+module.exports = (id) => {
     return es.delete({
         index: config.search.writeAlias,
         type: config.search.type,

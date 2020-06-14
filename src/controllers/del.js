@@ -1,6 +1,6 @@
-import del from '../services/del'
+const del = require('../services/del');
 
-export default function*() {
-    yield del(this.request.params.id);
-    this.status = 200;
+module.exports = async(ctx) => {
+    await del(ctx.request.params.id);
+    ctx.status = 200;
 }

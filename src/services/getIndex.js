@@ -1,7 +1,7 @@
-import es from './es'
-import config from 'config'
+const es = require('./es'),
+    config = require('config');
 
-export default function() {
+module.exports = () => {
     return es.indices.get({
         index: config.search.index
     });

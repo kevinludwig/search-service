@@ -1,7 +1,7 @@
-import es from './es'
-import config from 'config'
+const es = require('./es'),
+    config = require('config');
 
-export default function bulk(contents) {
+module.exports = (contents) => {
     let body = [];
     contents.forEach((content) => {
         body.push({
@@ -15,6 +15,6 @@ export default function bulk(contents) {
     });
 
     return es.client.bulk({
-        body: body
+        body
     });
 }

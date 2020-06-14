@@ -1,6 +1,6 @@
-import dropIndex from '../services/dropIndex'
+const dropIndex = require('../services/dropIndex');
 
-export default function*() {
-    yield dropIndex();
-    this.status = 200;
+module.exports = async (ctx) => {
+    await dropIndex();
+    ctx.status = 200;
 }
